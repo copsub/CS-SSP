@@ -1,0 +1,37 @@
+/* Widget styles */
+div.watch {
+background-image: url('img/play.png');
+background-repeat: no-repeat;
+background-position: 10px 13px;
+background-size: 30px 29px;
+background-color: #f24500;
+width: 148px;
+height: 30px;
+padding: 17px 10px 8px 50px;
+font-size: 22px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 160px;
+}
+
+div.support {
+background-image: url('img/ikoner_rocket.png');
+background-repeat: no-repeat;
+background-position: 10px 13px;
+background-size: 30px 29px;
+background-color: #f24500;
+width: 148px;
+height: 30px;
+padding: 17px 10px 8px 50px;
+font-size: 22px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 160px;
+}
+
+#gallery-sb .gallery-item {
+float: left;
+margin-top: 0;
+text-align: center;
+width: 50%;
+}
