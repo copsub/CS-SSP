@@ -4,354 +4,39 @@ Plugin Name: Site Plugin for copsub.com
 Description: Site specific code changes for copsub.com
 */
 
+function copsub_stylesheet() 
+{
+	wp_enqueue_style( 'copsub-plugin', plugins_url('/copsub.css', __FILE__) );
+
+	wp_enqueue_style( 'copsub-fancybox', plugins_url('/fancybox/source/jquery.fancybox.css', __FILE__), array(), '2.1.5', 'screen' );
+	wp_enqueue_style( 'copsub-fancybox-buttons', plugins_url('/fancybox/source/helpers/jquery.fancybox-buttons.css', __FILE__), array(), '1.0.5', 'screen' );
+	wp_enqueue_script( 'copsub-fancybox-pack', plugins_url('/fancybox/source/jquery.fancybox.pack.js', __FILE__), array('jquery'), '2.1.5' );
+	wp_enqueue_script( 'copsub-fancybox-buttons', plugins_url('/fancybox/source/helpers/jquery.fancybox-buttons.js', __FILE__), array('jquery'), '1.0.5' );
+	wp_enqueue_script( 'copsub-fancybox-media', plugins_url('/fancybox/source/helpers/jquery.fancybox-media.js', __FILE__), array('jquery'), '1.0.6' );
+
+	wp_enqueue_style( 'copsub-fancybox-thumbs', plugins_url('/fancybox/source/helpers/jquery.fancybox-thumbs.css', __FILE__), array(), '1.0.7', 'screen' );
+	wp_enqueue_script( 'copsub-fancybox-thumbs', plugins_url('/fancybox/source/helpers/jquery.fancybox-thumbs.js', __FILE__), array('jquery'), '1.0.7' );
+
+}
+
+// Disabled for old theme
+//add_action('wp_enqueue_scripts', 'copsub_stylesheet');
+
+
 /*
 ----------------------------------------
 [ @-> Widgets ]
 ----------------------------------------
 */	
 
-/* CS News Widget ---------------------*/
-
-// Creating the widget 
-class csnews_widget extends WP_Widget {
-
-function __construct() {
-parent::__construct(
-// Base ID of your widget
-'csnews_widget', 
-
-// Widget name will appear in UI
-__('CS News Widget', 'csnews_widget_domain'), 
-
-// Widget description
-array( 'description' => __( 'CS News Widget', 'csnews_widget_domain' ), ) 
-);
-}
-
-// Creating widget front-end
-// This is where the action happens
-public function widget( $args, $instance ) {
-
-   $query =  new WP_Query( array(
-      'no_found_rows'           => true, // counts posts, remove if pagination required
-      'update_pos t_meta_cache' => false,  // grabs post meta, remove if post meta required
-      'update_post_term_cache'  => false, // grabs terms, remove if terms required (category, tag...)
-      'post_type'               => array( 'news' ),
-      'posts_per_page'          => 3,
-	  'order'                   => 'date'
-   ) );
-
-$title = apply_filters( 'widget_title', $instance['title'] );
-// before and after widget arguments are defined by themes
-echo $args['before_widget'];
-if ( ! empty( $title ) )
-echo $args['before_title'] . $title . $args['after_title'];
-
-// This is where you run the code and display the output
-
-echo ( '<ul class="clr">' );
-            
-if ( $query->have_posts() ) : $query->have_posts();
-    
-while ( $query->have_posts() ) :	$query->the_post();
-	echo ( '<li>' );
-    printf ( '<span class="date">%s</span>', get_the_date( 'd.m.Y' ) );
-    printf ( '<h2><a href="%s">%s</a></h2>', get_permalink(), get_the_title() );
-	printf ( '<a class="newscontent" href="%s">%s</a>', get_permalink(), wp_trim_words( strip_tags( get_the_content( '', TRUE ) ), 20 ) );
-	echo ( '</li>' );
-                    
-endwhile;
-            
-else :
-endif;
-    
-wp_reset_postdata();
-echo ( '</ul>' );
-echo $args['after_widget'];
-}
-		
-// Widget Backend 
-public function form( $instance ) {
-if ( isset( $instance[ 'title' ] ) ) {
-$title = $instance[ 'title' ];
-}
-else {
-$title = __( 'New title', 'csnews_widget_domain' );
-}
-// Widget admin form
-?>
-<p>
-<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label> 
-<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
-</p>
-<?php 
-}
-	
-// Updating widget replacing old instances with new
-public function update( $new_instance, $old_instance ) {
-$instance = array();
-$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
-return $instance;
-}
-} // Class csnews_widget ends here
-
-// Register and load the widget
-function csnews_load_widget() {
-	register_widget( 'csnews_widget' );
-}
-add_action( 'widgets_init', 'csnews_load_widget' );
-
-
-/* CS Twitter Widget ---------------------*/
-
-// Creating the widget 
-class cstwit_widget extends WP_Widget {
-
-function __construct() {
-parent::__construct(
-// Base ID of your widget
-'cstwit_widget', 
-
-// Widget name will appear in UI
-__('CS Twitter Widget', 'cstwit_widget_domain'), 
-
-// Widget description
-array( 'description' => __( 'CS Twitter Widget', 'cstwit_widget_domain' ), ) 
-);
-}
-
-// Creating widget front-end
-// This is where the action happens
-public function widget( $args, $instance ) {
-
-// Data getting code here
-
-
-$title = apply_filters( 'widget_title', $instance['title'] );
-// before and after widget arguments are defined by themes
-echo $args['before_widget'];
-if ( ! empty( $title ) )
-echo $args['before_title'] . $title . $args['after_title'];
-
-// This is where you run the code and display the output
-
-
-echo ( '<div>' );
-echo ( '<a class="twitter-timeline" href="https://twitter.com/CopSub" data-widget-id="398783478361100288" data-tweet-limit="3" data-show-replies="false" data-border-color="#fff" data-chrome="nofooter noheader noborders noscrollbar transparent">Tweets by @CopSub</a>' );
-echo ( '<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?\'http\':\'https\';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>' );
-echo ( '</div>' );
-
-
-echo $args['after_widget'];
-}
-		
-// Widget Backend 
-public function form( $instance ) {
-if ( isset( $instance[ 'title' ] ) ) {
-$title = $instance[ 'title' ];
-}
-else {
-$title = __( 'New title', 'cstwit_widget_domain' );
-}
-// Widget admin form
-?>
-<p>
-<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label> 
-<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
-</p>
-<?php 
-}
-	
-// Updating widget replacing old instances with new
-public function update( $new_instance, $old_instance ) {
-$instance = array();
-$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
-return $instance;
-}
-} // Class cstwit_widget ends here
-
-// Register and load the widget
-function cstwit_load_widget() {
-	register_widget( 'cstwit_widget' );
-}
-add_action( 'widgets_init', 'cstwit_load_widget' );
-
-
-
-
-
-/* CS Youtube Widget ---------------------*/
-
-// Creating the widget 
-class csyoutube_widget extends WP_Widget {
-
-function __construct() {
-parent::__construct(
-// Base ID of your widget
-'csyoutube_widget', 
-
-// Widget name will appear in UI
-__('CS Youtube Widget', 'csyoutube_widget_domain'), 
-
-// Widget description
-array( 'description' => __( 'CS Youtube Widget', 'csyoutube_widget_domain' ), ) 
-);
-}
-
-// Creating widget front-end
-// This is where the action happens
-public function widget( $args, $instance ) {
-
-// Data getting code here
-
-
-$title = apply_filters( 'widget_title', $instance['title'] );
-// before and after widget arguments are defined by themes
-echo $args['before_widget'];
-if ( ! empty( $title ) )
-echo $args['before_title'] . $title . $args['after_title'];
-
-// This is where you run the code and display the output
-
-
-echo ( 'Dummy text');
-
-echo $args['after_widget'];
-}
-		
-// Widget Backend 
-public function form( $instance ) {
-if ( isset( $instance[ 'title' ] ) ) {
-$title = $instance[ 'title' ];
-}
-else {
-$title = __( 'New title', 'csyoutube_widget_domain' );
-}
-// Widget admin form
-?>
-<p>
-<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label> 
-<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
-</p>
-<?php 
-}
-	
-// Updating widget replacing old instances with new
-public function update( $new_instance, $old_instance ) {
-$instance = array();
-$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
-return $instance;
-}
-} // Class csyoutube_widget ends here
-
-// Register and load the widget
-function csyoutube_load_widget() {
-	register_widget( 'csyoutube_widget' );
-}
-add_action( 'widgets_init', 'csyoutube_load_widget' );
-
-
-
-
-
-/* CS Newsletter Widget ---------------------*/
-
-// Creating the widget 
-class csnewsletter_widget extends WP_Widget {
-
-function __construct() {
-parent::__construct(
-// Base ID of your widget
-'csnewsletter_widget', 
-
-// Widget name will appear in UI
-__('CS Newsletter Widget', 'csnewsletter_widget_domain'), 
-
-// Widget description
-array( 'description' => __( 'CS Newsletter Widget', 'csnewsletter_widget_domain' ), ) 
-);
-}
-
-// Creating widget front-end
-// This is where the action happens
-public function widget( $args, $instance ) {
-
-// Data getting code here
-
-
-$title = apply_filters( 'widget_title', $instance['title'] );
-// before and after widget arguments are defined by themes
-echo $args['before_widget'];
-if ( ! empty( $title ) )
-echo $args['before_title'] . $title . $args['after_title'];
-
-// This is where you run the code and display the output
-
-
-echo ( '<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">' );
-echo ( '<style type="text/css">
-	#mc_embed_signup{ }
-	#mce-EMAIL { float: left;}
-	/* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
-	   We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
-</style> ' );
-echo ( '<div id="mc_embed_signup">' );
-echo ( '<form action="http://copenhagensuborbitals.us5.list-manage.com/subscribe/post?u=3f64c6f691faf3c39b11c92a4&amp;id=0922a9e460" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>' );
-echo ( '<label for="mce-EMAIL">Subscribe to our mailing list</label>' );
-echo ( '<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>' );
-//    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-echo ( '<div style="position: absolute; left: -5000px;"><input type="text" name="b_3f64c6f691faf3c39b11c92a4_0922a9e460" value=""></div>' );
-echo ( '<div><input type="submit" value="Submit" name="subscribe" id="mc-embedded-subscribe" class="button"></div>' );
-echo ( '</form>' );
-echo ( '</div>' );
-
-// <!--End mc_embed_signup-->
-
-echo $args['after_widget'];
-}
-		
-// Widget Backend 
-public function form( $instance ) {
-if ( isset( $instance[ 'title' ] ) ) {
-$title = $instance[ 'title' ];
-}
-else {
-$title = __( 'New title', 'csnewsletter_widget_domain' );
-}
-// Widget admin form
-?>
-<p>
-<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label> 
-<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
-</p>
-<?php 
-}
-	
-// Updating widget replacing old instances with new
-public function update( $new_instance, $old_instance ) {
-$instance = array();
-$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
-return $instance;
-}
-} // Class csnewsletter_widget ends here
-
-// Register and load the widget
-function csnewsletter_load_widget() {
-	register_widget( 'csnewsletter_widget' );
-}
-add_action( 'widgets_init', 'csnewsletter_load_widget' );
-
-
-
-
-
-
-
-
-
-
-
-
+include( plugin_dir_path( __FILE__ ) . 'widgets/cs_support_widget.php');
+include( plugin_dir_path( __FILE__ ) . 'widgets/cs_watchus_widget.php');
+include( plugin_dir_path( __FILE__ ) . 'widgets/cs_facts_widget.php');
+include( plugin_dir_path( __FILE__ ) . 'widgets/cs_externalvideo_widget.php');
+include( plugin_dir_path( __FILE__ ) . 'widgets/cs_imagetag_widget.php');
+include( plugin_dir_path( __FILE__ ) . 'widgets/cs_posttag_widget.php');
+
+include( plugin_dir_path( __FILE__ ) . 'csfancybox2.php');
 
 /*
 ------------------------------------------------------------------------------------------
@@ -359,15 +44,7 @@ add_action( 'widgets_init', 'csnewsletter_load_widget' );
 ------------------------------------------------------------------------------------------
 */
 
-
-
-    remove_action( 'admin_color_scheme_picker', 'admin_color_scheme_picker' );
-
-
-
-
-
-
+remove_action( 'admin_color_scheme_picker', 'admin_color_scheme_picker' );
 
 function copsub_user_profile_countries() {
 
@@ -627,23 +304,6 @@ function copsub_user_profile_countries() {
 
 }
 
-
-
-
-
-
-
-
-
 /* Stop Adding Functions Below this Line */
-
-
-
-
-
-
-
-
-
 
 ?>
