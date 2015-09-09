@@ -316,6 +316,15 @@ function copsub_user_profile_countries() {
 
 }
 
+function get_youtube_streaming_url_from_text_file(){
+  $text_file_path = "/home/streamteam/youtubelink.txt";
+  if( file_exists($text_file_path) && is_readable($text_file_path)) {
+    return trim(file_get_contents($text_file_path));
+  }else{
+    return "link_not_available";
+  }
+}
+
 /* Stop Adding Functions Below this Line */
 
 ?>
