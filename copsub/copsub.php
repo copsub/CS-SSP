@@ -6,21 +6,21 @@ Description: Site specific code changes for copsub.com
 
 function copsub_stylesheet() 
 {
-	wp_enqueue_style( 'copsub-plugin', plugins_url('/copsub.css', __FILE__) );
+	wp_enqueue_style( 'copsub-plugin', plugins_url('copsub.css', __FILE__) );
 
-	wp_enqueue_style( 'copsub-fancybox', plugins_url('/fancybox/source/jquery.fancybox.css', __FILE__), array(), '2.1.5', 'screen' );
-	wp_enqueue_style( 'copsub-fancybox-buttons', plugins_url('/fancybox/source/helpers/jquery.fancybox-buttons.css', __FILE__), array(), '1.0.5', 'screen' );
-	wp_enqueue_script( 'copsub-fancybox-pack', plugins_url('/fancybox/source/jquery.fancybox.pack.js', __FILE__), array('jquery'), '2.1.5' );
-	wp_enqueue_script( 'copsub-fancybox-buttons', plugins_url('/fancybox/source/helpers/jquery.fancybox-buttons.js', __FILE__), array('jquery'), '1.0.5' );
-	wp_enqueue_script( 'copsub-fancybox-media', plugins_url('/fancybox/source/helpers/jquery.fancybox-media.js', __FILE__), array('jquery'), '1.0.6' );
+//	wp_enqueue_style( 'copsub-fancybox', plugins_url('fancybox/source/jquery.fancybox.css', __FILE__), array(), '2.1.5', 'screen' );
+//	wp_enqueue_style( 'copsub-fancybox-buttons', plugins_url('fancybox/source/helpers/jquery.fancybox-buttons.css', __FILE__), array(), '1.0.5', 'screen' );
+//	wp_enqueue_script( 'copsub-fancybox-pack', plugins_url('fancybox/source/jquery.fancybox.pack.js', __FILE__), array('jquery'), '2.1.5' );
+//	wp_enqueue_script( 'copsub-fancybox-buttons', plugins_url('fancybox/source/helpers/jquery.fancybox-buttons.js', __FILE__), array('jquery'), '1.0.5' );
+//	wp_enqueue_script( 'copsub-fancybox-media', plugins_url('fancybox/source/helpers/jquery.fancybox-media.js', __FILE__), array('jquery'), '1.0.6' );
 
-	wp_enqueue_style( 'copsub-fancybox-thumbs', plugins_url('/fancybox/source/helpers/jquery.fancybox-thumbs.css', __FILE__), array(), '1.0.7', 'screen' );
-	wp_enqueue_script( 'copsub-fancybox-thumbs', plugins_url('/fancybox/source/helpers/jquery.fancybox-thumbs.js', __FILE__), array('jquery'), '1.0.7' );
+//	wp_enqueue_style( 'copsub-fancybox-thumbs', plugins_url('fancybox/source/helpers/jquery.fancybox-thumbs.css', __FILE__), array(), '1.0.7', 'screen' );
+//	wp_enqueue_script( 'copsub-fancybox-thumbs', plugins_url('fancybox/source/helpers/jquery.fancybox-thumbs.js', __FILE__), array('jquery'), '1.0.7' );
 
 }
 
 // Disabled for old theme
-//add_action('wp_enqueue_scripts', 'copsub_stylesheet');
+add_action('wp_enqueue_scripts', 'copsub_stylesheet');
 
 
 /*
@@ -35,6 +35,7 @@ include( plugin_dir_path( __FILE__ ) . 'widgets/cs_facts_widget.php');
 include( plugin_dir_path( __FILE__ ) . 'widgets/cs_externalvideo_widget.php');
 include( plugin_dir_path( __FILE__ ) . 'widgets/cs_imagetag_widget.php');
 include( plugin_dir_path( __FILE__ ) . 'widgets/cs_posttag_widget.php');
+include( plugin_dir_path( __FILE__ ) . 'widgets/cs_livestream_widget.php');
 
 include( plugin_dir_path( __FILE__ ) . 'csfancybox2.php');
 
