@@ -50,7 +50,6 @@ include( plugin_dir_path( __FILE__ ) . 'lib/sandbox_button.php');
 
 
 
-
 /*
 ------------------------------------------------------------------------------------------
 [ @-> user handling ]
@@ -325,6 +324,21 @@ function get_youtube_streaming_url_from_text_file(){
     return "link_not_available";
   }
 }
+
+/* This function makes sure all other plugins are loaded before  */
+function copsub_plugin_postload() {
+
+/*
+------------------------------------------------------------------------------------------
+[ @-> ACF Settings Page ]
+------------------------------------------------------------------------------------------
+*/
+
+include( plugin_dir_path( __FILE__ ) . 'lib/acf_settings.php');
+
+}
+
+add_action( 'plugins_loaded', 'copsub_plugin_postload', 300);
 
 /* Stop Adding Functions Below this Line */
 
