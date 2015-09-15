@@ -317,13 +317,22 @@ function copsub_user_profile_countries() {
 }
 
 function get_youtube_streaming_url_from_text_file(){
-  $text_file_path = "/home/streamteam/youtubelink.txt";
-  if( file_exists($text_file_path) && is_readable($text_file_path)) {
-    return trim(file_get_contents($text_file_path));
+  // First we retrieve the ACF field from the options page
+  $acf_streaming_link = get_field('youtube_streaming_link', 'option');
+
+  // If it's empty, then we look at the streamteam text file
+  if (strlen($acf_streaming_link) == 0){
+    $text_file_path = "/home/streamteam/youtubelink.txt";
+    if( file_exists($text_file_path) && is_readable($text_file_path)) {
+      return trim(file_get_contents($text_file_path));
+    }else{
+      return "link_not_available";
+    }
   }else{
-    return "link_not_available";
-  }
+    return $acf_streaming_link;
+  }  
 }
+
 
 /* This function makes sure all other plugins are loaded before  */
 function copsub_plugin_postload() {
