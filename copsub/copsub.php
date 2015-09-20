@@ -316,6 +316,8 @@ function copsub_user_profile_countries() {
 
 }
 
+
+
 function get_youtube_streaming_url_from_text_file(){
   // First we retrieve the ACF field from the options page
   $acf_streaming_link = get_field('youtube_streaming_link', 'option');
@@ -332,6 +334,9 @@ function get_youtube_streaming_url_from_text_file(){
     return $acf_streaming_link;
   }  
 }
+
+
+
 
 
 /* This function makes sure all other plugins are loaded before  */

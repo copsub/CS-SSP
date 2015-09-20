@@ -25,4 +25,22 @@ if( function_exists('acf_add_options_page') ) {
 }
 
 
+function my_acf_save_post( $post_id ) {
+    
+    // get new value
+  	$launch_message = get_field( 'front_launch_message', 'option' );
+    
+    
+    // do something
+    if (function_exists(‘w3tc_pgcache_flush’)) {
+		w3tc_pgcache_flush();
+	}
+    //update_field('front_launch_message', 'blabla', 'option');
+}
+
+// run after ACF saves the $_POST['acf'] data
+add_action('acf/save_post', 'my_acf_save_post', 20);
+
+
+
 ?>
