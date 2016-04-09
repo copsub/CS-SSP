@@ -44,7 +44,7 @@ add_action('wp_ajax_nopriv_dgx_donate_bank_transfer', 'dgx_donate_bank_transfer'
 $MY_KEY_FILE = "/home/web/paypal_certificates/cs-prvkey.pem";
 
 # public certificate file to use
-$MY_CERT_FILE = "/home/web/paypal_certificates/cs-pubcert.pem";
+$MY_CERT_FILE = "/home/web/paypal_certificates/cs-pubcert-2016.pem";
 
 # Paypal's public certificate (Paypal has a different one for the sandbox)
 // $PAYPAL_CERT_FILE = "/home/web/paypal_certificates/paypal_sandbox_cert.pem";
