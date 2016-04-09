@@ -45,14 +45,19 @@ $MY_KEY_FILE = "/home/web/paypal_certificates/cs-prvkey.pem";
 
 # public certificate file to use
 $MY_CERT_FILE = "/home/web/paypal_certificates/cs-pubcert-2016.pem";
+$MY_CERT_ID = '9GSX68YKWRUQW';
+$MY_BUSINESS_ID = 'donate@copsub.com';
 
 # Paypal's public certificate (Paypal has a different one for the sandbox)
-// $PAYPAL_CERT_FILE = "/home/web/paypal_certificates/paypal_sandbox_cert.pem";
 $PAYPAL_CERT_FILE = "/home/web/paypal_certificates/paypal_cert.pem";
 
 # path to the openssl binary
 $OPENSSL = "/usr/bin/openssl";
 
+# Sandbox Certificate for testing
+// $MY_BUSINESS_ID = 'ignaci_1333211594_biz@ihuerta.net';
+// $MY_CERT_ID = 'NNKRJEJDVPRQC';
+// $PAYPAL_CERT_FILE = "/home/web/paypal_certificates/paypal_sandbox_cert.pem";
 
 
 
@@ -67,10 +72,8 @@ function dgx_donate_paypal(){
   }
   $paypal_options = array(
     'cmd' => $cmd,
-    'business' => 'donate@copsub.com',
-    'cert_id' => 'BD3LE43A5BWPJ',
-    // 'business' => 'ignaci_1333211594_biz@ihuerta.net',
-    // 'cert_id' => 'NNKRJEJDVPRQC',
+    'business' => $MY_BUSINESS_ID,
+    'cert_id' => $MY_CERT_ID,
     'lc' => 'US',
     'invoice' => '',
     'currency_code' => $_POST['currency'],
@@ -82,7 +85,7 @@ function dgx_donate_paypal(){
     'p3' => '1',
     't3' => 'M',
     'src' => '1',
-    'return' => 'http://copenhagensuborbitals.com/ext/fbtab/fbthankyou.php',
+    'return' => 'http://copenhagensuborbitals.com/',
     'cancel_return' => 'http://copenhagensuborbitals.com/support-us/'
   );
 
