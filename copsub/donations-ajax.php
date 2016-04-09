@@ -63,6 +63,9 @@ $OPENSSL = "/usr/bin/openssl";
 
 
 function dgx_donate_paypal(){
+  global $MY_BUSINESS_ID;
+  global $MY_CERT_ID;
+
   if ($_POST['monthly'] == 'true'){
     $cmd = '_xclick-subscriptions';
     $item_name = 'Copenhagen Suborbitals Monthly Donation';
