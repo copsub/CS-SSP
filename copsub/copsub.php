@@ -354,6 +354,20 @@ include( plugin_dir_path( __FILE__ ) . 'lib/acf_settings.php');
 
 add_action( 'plugins_loaded', 'copsub_plugin_postload', 300);
 
+
+
+
+
+
+/*
+------------------------------------------------------------------------------------------
+[ @-> Donations Ajax ]
+------------------------------------------------------------------------------------------
+*/
+
+include( plugin_dir_path( __FILE__ ) . 'donations-ajax.php');
+
+
 /* Stop Adding Functions Below this Line */
 
 ?>
