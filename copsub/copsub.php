@@ -36,7 +36,7 @@ include( plugin_dir_path( __FILE__ ) . 'widgets/cs_externalvideo_widget.php');
 include( plugin_dir_path( __FILE__ ) . 'widgets/cs_imagetag_widget.php');
 include( plugin_dir_path( __FILE__ ) . 'widgets/cs_posttag_widget.php');
 include( plugin_dir_path( __FILE__ ) . 'widgets/cs_livestream_widget.php');
-
+include( plugin_dir_path( __FILE__ ) . 'widgets/cs_recentposts_widget.php');
 include( plugin_dir_path( __FILE__ ) . 'csfancybox2.php');
 
 
