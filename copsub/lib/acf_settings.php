@@ -22,6 +22,12 @@ if( function_exists('acf_add_options_page') ) {
 		'menu_title'	=> 'Livestream',
 		'parent_slug'	=> 'cs-settings',
 	));
+
+	acf_add_options_sub_page(array(
+		'page_title' 	=> 'Mission Landing Page Settings',
+		'menu_title'	=> 'Mission Landing Page',
+		'parent_slug'	=> 'cs-settings',
+	));
 }
 
 
