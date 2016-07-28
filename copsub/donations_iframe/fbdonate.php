@@ -87,7 +87,7 @@ input#paypal-submit{
   background-position: center top;
   background-repeat:no-repeat;
   background-size:100% !important;
-	background-image: url('http://copenhagensuborbitals.com/ext/fbtab/fbbackground.png');
+	background-image: url('//copenhagensuborbitals.com/ext/fbtab/fbbackground.png');
 
 
 }
@@ -239,7 +239,7 @@ input#paypal-submit{
 
 
 
-$.get("http://ipinfo.io", function (response) {
+$.get("//ipinfo.io", function (response) {
 	if (response.country == "DK") {
 	$("#currency_code").val("DKK");
 	}
@@ -357,10 +357,10 @@ function payWithPaypal(){
   </form>
 
   <div class="main_donate_section_1_overlay_12 overlay_show">	
- 	 	<div style="width:100%;background:url('http://copenhagensuborbitals.com/ext/fbtab/dividerline.png') no-repeat;height:1px; "></div>
+ 	 	<div style="width:100%;background:url('//copenhagensuborbitals.com/ext/fbtab/dividerline.png') no-repeat;height:1px; "></div>
   </div>
   <div class="main_donate_section_1_overlay_13 overlay_show">	
- 	 	<div style="width:100%;background:url('http://copenhagensuborbitals.com/ext/fbtab/dividerline.png') no-repeat;height:1px; "></div>
+ 	 	<div style="width:100%;background:url('//copenhagensuborbitals.com/ext/fbtab/dividerline.png') no-repeat;height:1px; "></div>
   </div>
 
 
