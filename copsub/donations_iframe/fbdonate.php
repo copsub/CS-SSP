@@ -17,6 +17,10 @@ font-size:20px;
 width:90%;
 }
 
+#currency_code{
+  font-size: 16px;
+}
+
 input#paypal-submit{
   display: none;
 }
@@ -37,7 +41,7 @@ input#paypal-submit{
   padding: 0;
 }
 
-#bank-transfer-modal{
+.payment-modal{
   display: none;
   z-index: 9999;
   position: absolute;
@@ -48,13 +52,18 @@ input#paypal-submit{
   left: 10%;
   border-radius: 10px;
 }
-#bank-transfer-modal #close{
+
+.modal-close{
   float:right;
   text-decoration: none;
-  color: black;
-  font-size: 11px;
+  color: white;
+  font-weight: bold;
+  font-size: 12px;
+  background-color: #ff4f00;
+  padding: 2px 4px;
+  border-radius: 2px;
 }
-#bank-transfer-modal input{
+.payment-modal input[type="text"], .payment-modal input[type="number"], .payment-modal input[type="email"]{
   font-size: 16px;
   padding: 5px;
   width: 270px;
@@ -77,6 +86,8 @@ input#paypal-submit{
 #paypal-form{
   display: none;
 }
+
+
 
 
 
@@ -149,8 +160,8 @@ input#paypal-submit{
 .main_donate_section_1_overlay_7 {
   position: absolute;
   top: 28%;
-  bottom: 66.5%;
-  right: 63%;
+  bottom: 66.2%;
+  right: 68%;
   left: 6%;
   background-color: #ff4f00;
   padding: 1%;
@@ -164,15 +175,30 @@ input#paypal-submit{
 .main_donate_section_1_overlay_8 {
   position: absolute;
   top: 28%;
-  bottom: 66.5%;
-  right: 30%;
-  left: 39%;
+  bottom: 66.2%;
+  right: 40%;
+  left: 35%;
   background-color: #ff4f00;
   padding: 1%;
   color: #FFFFFF;
   text-align: center;
 }
 .main_donate_section_1_overlay_8:hover{
+  cursor:pointer;
+  background-color: #bababa;
+}
+.main_donate_section_1_overlay_14 {
+  position: absolute;
+  top: 28%;
+  bottom: 66.2%;
+  right: 13%;
+  left: 63%;
+  background-color: #ff4f00;
+  padding: 1%;
+  color: #FFFFFF;
+  text-align: center;
+}
+.main_donate_section_1_overlay_14:hover{
   cursor:pointer;
   background-color: #bababa;
 }
@@ -194,7 +220,7 @@ input#paypal-submit{
 }
 .main_donate_section_1_overlay_11 {
   position: absolute;
-  top: 16.4%;
+  top: 16.15%;
   bottom: 79.5%;
   right: 65%;
   left: 25%;
@@ -295,6 +321,10 @@ function payWithPaypal(){
   return false;
 }
 
+function openBitcoinModal(){
+  $('#bitcoin-modal').show();
+}
+
 </script>
 
 
@@ -332,14 +362,20 @@ function payWithPaypal(){
 		<div class="main_donate_section_1_overlay_7 overlay_show">	
     	<div class="donate-button" id="paypal-donate" onclick="payWithPaypal();">
       	<div style="font: 5.5vw helvetica, sans-serif; font-weight: bold;">Donate</div>
-      	<div style="font: 2.5vw helvetica, sans-serif; font-weight: normal;">via PayPal / Credit Card</div>
+      	<div style="font: 2.2vw helvetica, sans-serif; font-weight: normal;">via PayPal / Credit Card</div>
     	</div>
     </div>		
     <div class="main_donate_section_1_overlay_8 overlay_show">	
     	<div class="donate-button" id="bank-donate" onclick="$('#bank-transfer-modal').show();">
       	<div style="font: 5.5vw helvetica, sans-serif; font-weight: bold;">Donate</div>
-      	<div style="font: 2.5vw helvetica, sans-serif; font-weight: normal;">via Bank Transfer</div>
+      	<div style="font: 2.2vw helvetica, sans-serif; font-weight: normal;">via Bank Transfer</div>
     	</div>
+    </div>
+    <div class="main_donate_section_1_overlay_14 overlay_show">  
+      <div class="donate-button" id="bitcoin-donate" onclick="openBitcoinModal()">
+        <div style="font: 5.5vw helvetica, sans-serif; font-weight: bold;">Donate</div>
+        <div style="font: 2.2vw helvetica, sans-serif; font-weight: normal;">via Bitcoin</div>
+      </div>
     </div>    
     <div class="main_donate_section_1_overlay_9 overlay_show">	
     	<input type="checkbox" id="supporter" name="supporter" value="supporter" style="margin-top:50%;margin-left:30%">
@@ -373,16 +409,45 @@ function payWithPaypal(){
 
 
 
-  <div id="bank-transfer-modal">
-    <a href="#" id="close" onclick="$('#bank-transfer-modal').hide()">X</a>
+  <div id="bank-transfer-modal" class="payment-modal">
+    <a href="#" class="modal-close" onclick="$('#bank-transfer-modal').hide()">X</a>
     <form action="#" id="bank-transfer-modal-content" onsubmit="payWithBankTransfer()">
       <p>
         Please enter your email address so we can send you the donation instructions:
       </p>
-      <input style="width: 80%" id="bank-transfer-email" type="text" name="email"/>
+      <input style="width: 80%" id="bank-transfer-email" type="email" name="email"/>
       <a class="button" href="#" onclick="payWithBankTransfer()">Send</a>
     </form>
   </div>
+
+
+
+  <div id="bitcoin-modal" class="payment-modal">
+    <a href="#" class="modal-close" onclick="$('#bitcoin-modal').hide()">X</a>
+    <form action="https://bitpay.com/checkout" method="post">
+      <input name="action" type="hidden" value="checkout">
+      <input name="currency" type="hidden" value="BTC"/>
+
+      <p>
+        Please enter the amount of Bitcoins:<br/>
+        <input class="bitpay-donate-field-price" name="price" type="number" value="10.00" placeholder="Amount" maxlength="10" min="0.000006" step="0.000001"/>
+      </p>
+
+
+      <p>
+        Please enter your email address:<br/>
+        <input style="width: 80%" type="email" name="orderID"/>
+      </p>
+      <br/>
+
+      <input type="hidden" name="data" value="DPYnRzYytNuTX3ZB49ICAZNNZ9QcvOqt/Z9pdEV0goMIQYvUV2lF8/w+gzX+8YlJwD1uwEEZRkB4JyYaigMANTfmigt59ZgAQWBk2Oa43x/7Y32EW2rytXIWjr38PpvK2ZEBE/DGDN468vsTS968i/ct2+P5CWtC8reGi2apqryRXY1dWrkEAk9OOrsE9fCwdwy0n0E2XpcOCMAVoPb5zZIuTU0oEECsAUPys4CTF59ZL87REcXhDbrGlipE+gOhELDp5GxpNPyLhKgpNpbsgIBB15amwQt1fa0ojvS5qhgFvj8YhTNljxmv8sZQNHUWH1uPlE5eYkxZsNXqgqC8dQ=="> 
+      <div class="bitpay-donate-button-wrapper">
+        <input class="bitpay-donate-button" name="submit" src="https://bitpay.com/img/donate-button.svg" onerror="this.onerror=null; this.src='https://bitpay.com/img/donate-button-md.png'" width="126" height="48" type="image" alt="BitPay, the easy way to pay with bitcoins." border="0">
+      </div>
+    </form>
+  </div>
+
+
 
   <!-- Replace with https://www.sandbox.paypal.com/cgi-bin/webscr for testing in the sandbox. Remember to change also the settings in dgx-donate-paypalstd.php -->
   <form id="paypal-form" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
