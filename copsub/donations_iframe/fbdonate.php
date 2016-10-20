@@ -430,7 +430,7 @@ function openBitcoinModal(){
 
       <p>
         Please enter the amount of Bitcoins:<br/>
-        <input class="bitpay-donate-field-price" name="price" type="number" value="10.00" placeholder="Amount" maxlength="10" min="0.000006" step="0.000001"/>
+        <input class="bitpay-donate-field-price" name="price" type="number" value="0.01" placeholder="Amount" maxlength="10" min="0.003" step="0.001"/>
       </p>
 
 
